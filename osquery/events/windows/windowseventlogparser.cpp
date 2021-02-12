@@ -143,6 +143,13 @@ Status parseWindowsEventLogPTree(WELEvent& windows_event,
         "valid");
   }
 
+  output.computer_name = event_object.get("Event.System.Computer", -1);
+  if (output.computer_name == -1) {
+    return Status::failure(
+        "Invalid Windows event object: the System.Computer tag is missing or not "
+        "valid");
+  }    
+    
   output.level = event_object.get("Event.System.Level", -1);
   if (output.level == -1) {
     return Status::failure(
